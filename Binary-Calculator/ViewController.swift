@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var digitsStackView: UIStackView!
 
     var digitButtons : [UIButton]!
+    var hasDecimalDot = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +38,31 @@ class ViewController: UIViewController {
         if number == "0" {
             number = ""
         }
-        numberTextField.text = number + sender.titleLabel!.text!
+        let digitToAdd = sender.titleLabel!.text!
+        if digitToAdd != "." {
+            numberTextField.text = number + digitToAdd
+        } else if !hasDecimalDot {
+            numberTextField.text = number + digitToAdd
+            hasDecimalDot = true
+        }
     }
 
+    @IBAction func eraseNumber(_ sender: UIButton) {
+        numberTextField.text = "0"
+        hasDecimalDot = false
+    }
+
+    @IBAction func changeSign(_ sender: UIButton) {
+        var number = numberTextField.text!
+        if number != "0" {
+            let isNegative = number.prefix(1) == "-"
+            if isNegative {
+                number = String(number.suffix(number.count - 1))
+            } else {
+                number = "-" + number
+            }
+            numberTextField.text = number
+        }
+    }
 }
 

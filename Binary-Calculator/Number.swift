@@ -8,20 +8,34 @@
 
 import UIKit
 
-enum Base {
-    case Binary; case Terniary; case Four; case Five;
-    case Six; case Seven; case Octal; case Nine;
-    case Decimal; case Undecimal; case Duodecimal;
-    case Thirdecimal; case Fourthdecimal; case Fifthdecimal;
-    case Hexadecimal;
+enum Base: Int{
+    case Base2 = 2; case Base3; case Base4; case Base5;
+    case Base6; case Base7; case Base8; case Base9;
+    case Base10; case Base11; case Base12; case Base13;
+    case Base14; case Base15; case Base16;
 }
 
 class Number: NSObject {
 
-    var number: String!
+    var whole: Int!
+    var fract: String!
+    var base: Base!
+    var isNegative: Bool!
 
-    init(number: String) {
-        self.number = number
+    init(number: String, base: Base) {
+        self.base = base
+        let digits = Array(number);
+        
+        isNegative = digits[0] == "-"
+        
+        if let dotPos = digits.lastIndex(of: ".") {
+            let wholeStr = String(digits[0..<dotPos])
+            whole = Int(wholeStr, radix: base.rawValue)!
+            
+            // let fractStr = String(digits[(dotPos + 1)...])
+            fract = ""
+        } else {
+            whole = Int(number, radix: base.rawValue)!
+        }
     }
-
 }

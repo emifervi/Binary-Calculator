@@ -14,6 +14,7 @@
 		996BC5C22351716100D35DCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996BC5C12351716100D35DCB /* Assets.xcassets */; };
 		996BC5C52351716100D35DCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996BC5C32351716100D35DCB /* LaunchScreen.storyboard */; };
 		9970687E23523A5400C5FC75 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970687D23523A5400C5FC75 /* Number.swift */; };
+		DBFD68F523528B3C00C0E1A2 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFD68F423528B3C00C0E1A2 /* Operations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		996BC5C42351716100D35DCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		996BC5C62351716100D35DCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9970687D23523A5400C5FC75 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		DBFD68F423528B3C00C0E1A2 /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				996BC5B82351715E00D35DCB /* AppDelegate.swift */,
 				9970687D23523A5400C5FC75 /* Number.swift */,
+				DBFD68F423528B3C00C0E1A2 /* Operations.swift */,
 				996BC5BA2351715F00D35DCB /* SceneDelegate.swift */,
 				996BC5BC2351715F00D35DCB /* ViewController.swift */,
 				996BC5BE2351715F00D35DCB /* Main.storyboard */,
@@ -145,6 +148,7 @@
 				996BC5BD2351715F00D35DCB /* ViewController.swift in Sources */,
 				996BC5B92351715E00D35DCB /* AppDelegate.swift in Sources */,
 				996BC5BB2351715F00D35DCB /* SceneDelegate.swift in Sources */,
+				DBFD68F523528B3C00C0E1A2 /* Operations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

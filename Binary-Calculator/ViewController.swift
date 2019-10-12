@@ -15,6 +15,11 @@ class ViewController: UIViewController {
 
     var digitButtons : [UIButton]!
     var hasDecimalDot = false
+    
+    var prevNum: Number!
+    var nextNum: Number!
+    
+    var actualBase = Base.Base10
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +40,11 @@ class ViewController: UIViewController {
 
     @IBAction func addDigit(_ sender: UIButton) {
         var number = numberTextField.text ?? ""
-        if number == "0" {
+        let digitToAdd = sender.titleLabel!.text!
+
+        if number == "0" && digitToAdd != "." {
             number = ""
         }
-        let digitToAdd = sender.titleLabel!.text!
         if digitToAdd != "." {
             numberTextField.text = number + digitToAdd
         } else if !hasDecimalDot {
@@ -63,6 +69,28 @@ class ViewController: UIViewController {
             }
             numberTextField.text = number
         }
+    }
+    
+    @IBAction func sum(_ sender: UIButton) {
+        print("Sum...")
+        storeNumber()
+    }
+    
+    @IBAction func subtract(_ sender: UIButton) {
+        storeNumber()
+    }
+    
+    @IBAction func baseComplement(_ sender: UIButton) {
+        storeNumber()
+    }
+    
+    @IBAction func convertBase(_ sender: UIButton) {
+        storeNumber()
+    }
+    
+    func storeNumber(){
+        prevNum = Number(number: numberTextField.text!, base: actualBase)
+        print(prevNum.whole!)
     }
 }
 

@@ -191,6 +191,9 @@
                                                 <state key="normal" title="+">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="sum:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gel-Dv-Nec"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -237,6 +240,9 @@
                                                 <state key="normal" title="–">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="subtract:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ycy-LT-GUO"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -283,6 +289,9 @@
                                                 <state key="normal" title="ß">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="baseComplement:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dnY-Q9-ZvV"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -327,6 +336,9 @@
                                                 <state key="normal" title="⇄">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="convertBase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y1O-70-4mK"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>

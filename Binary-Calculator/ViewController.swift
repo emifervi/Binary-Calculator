@@ -12,18 +12,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var digitsStackView: UIStackView!
-
-    var digitButtons : [UIButton]!
+    @IBOutlet weak var curBaseBtn: UIButton!
+    
+    var digitButtons: [UIButton] = [UIButton]()
     var hasDecimalDot = false
     
     var prevNum: Number!
     var nextNum: Number!
     
-    var actualBase = Base.Base10
+    var curBase = Base.Base10
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // loadDigitButtons()
+        loadDigitButtons()
     }
 
     // MARK:- Pickerview functions
@@ -60,32 +61,37 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         picker.setValue(UIColor.black, forKey: "textColor")
         picker.autoresizingMask = .flexibleWidth
         picker.contentMode = .center
-        picker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
+        picker.frame = CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
+        picker.selectRow(curBase.rawValue - 2, inComponent: 0, animated: false)
         self.view.addSubview(picker)
 
-        toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
-        toolBar.barStyle = .black
+        toolBar = UIToolbar.init(frame: CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
+        toolBar.barStyle = .default
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(doneClick))]
         self.view.addSubview(toolBar)
     }
 
-    @objc func doneClick() {
+    @objc func doneClick() {        
+        let selectedBase = Base(rawValue: picker.selectedRow(inComponent: 0) + 2)!
+        changeCurBase(base: selectedBase)
+                
         toolBar.removeFromSuperview()
         picker.removeFromSuperview()
     }
 
-    // MARK:- Our stuff
+    // MARK:- UI functions
 
     func loadDigitButtons() {
         let innerStackViews = digitsStackView.subviews as! [UIStackView]
         let lastIndex = innerStackViews.count - 1
         for index in 0..<lastIndex {
             let innerDigits = innerStackViews[index].subviews as! [UIButton]
-            digitButtons += innerDigits[0...2]
+            digitButtons += innerDigits[0...2].reversed()
         }
         digitButtons.append(
             innerStackViews[lastIndex].subviews[1] as! UIButton
         )
+        digitButtons = digitButtons.reversed()
     }
 
     @IBAction func addDigit(_ sender: UIButton) {
@@ -121,8 +127,31 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    func changeCurBase(base: Base) -> Void {
+        if curBase.rawValue > base.rawValue {
+            numberTextField.text = "0"
+        }
+        
+        curBase = base
+        curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
+        
+        for index in 2..<base.rawValue {
+            digitButtons[index].isEnabled = true
+            digitButtons[index].backgroundColor = UIColor.lightGray
+            digitButtons[index].setTitleColor(UIColor.white, for: .normal)
+        }
+        
+        for index in base.rawValue..<16 {
+            digitButtons[index].isEnabled = false
+            digitButtons[index].backgroundColor = UIColor.darkGray
+            digitButtons[index].setTitleColor(UIColor.lightGray, for: .normal)
+        }
+        
+    }
+    
+    // MARK:- Operations
+    
     @IBAction func sum(_ sender: UIButton) {
-        print("Sum...")
         storeNumber()
     }
     
@@ -140,7 +169,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func storeNumber(){
-        prevNum = Number(number: numberTextField.text!, base: actualBase)
+        prevNum = Number(number: numberTextField.text!, base: curBase)
         print(prevNum.whole!)
     }
 }

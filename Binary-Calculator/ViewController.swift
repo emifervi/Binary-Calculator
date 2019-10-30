@@ -128,9 +128,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func changeCurBase(base: Base) -> Void {
-        if curBase.rawValue > base.rawValue {
-            numberTextField.text = "0"
-        }
+        let temp = Number(number: numberTextField.text!, base: curBase)
+        temp.updateBase(base)
+        numberTextField.text = temp.toString()
         
         curBase = base
         curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
@@ -170,7 +170,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func storeNumber(){
         prevNum = Number(number: numberTextField.text!, base: curBase)
-        print(prevNum.whole!)
+        print(prevNum.whole)
     }
 }
 

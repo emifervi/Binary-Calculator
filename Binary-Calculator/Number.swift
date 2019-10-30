@@ -17,10 +17,10 @@ enum Base: Int{
 
 class Number: NSObject {
 
-    var whole: Int!
+    var whole: Int
     var fract: String!
-    var base: Base!
-    var isNegative: Bool!
+    var base: Base
+    var isNegative: Bool
 
     init(number: String, base: Base) {
         self.base = base
@@ -37,5 +37,13 @@ class Number: NSObject {
         } else {
             whole = Int(number, radix: base.rawValue)!
         }
+    }
+
+    func updateBase(_ base: Base) {
+        self.base = base
+    }
+
+    func toString() -> String {
+        String(whole, radix: base.rawValue, uppercase: true)
     }
 }

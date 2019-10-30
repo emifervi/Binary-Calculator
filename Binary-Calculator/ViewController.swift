@@ -18,7 +18,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var hasDecimalDot = false
     
     var prevNum: Number!
-    var nextNum: Number!
+    var prevOperation = ""
+    var highlightedButton : UIButton!
     
     var curBase = Base.Base10
 
@@ -98,6 +99,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var number = numberTextField.text ?? ""
         let digitToAdd = sender.titleLabel!.text!
 
+        if highlightedButton != nil {
+            number = ""
+            unHighlightButton()
+        }
+
         if number == "0" && digitToAdd != "." {
             number = ""
         }
@@ -110,6 +116,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func eraseNumber(_ sender: UIButton) {
+        if numberTextField.text == "0" {
+            prevOperation = ""
+            prevNum = nil
+        }
         numberTextField.text = "0"
         hasDecimalDot = false
     }
@@ -146,31 +156,82 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             digitButtons[index].backgroundColor = UIColor.darkGray
             digitButtons[index].setTitleColor(UIColor.lightGray, for: .normal)
         }
-        
+    }
+
+    func unHighlightButton() {
+        highlightedButton.backgroundColor = .systemOrange
+        highlightedButton.setTitleColor(.white, for: .normal)
+        highlightedButton = nil
+    }
+
+    func highlightButton(_ button: UIButton) {
+        button.backgroundColor = .white
+        button.setTitleColor(.systemOrange, for: .normal)
+        highlightedButton = button
     }
     
     // MARK:- Operations
+
+    func curNumber() -> Number {
+        Number(number: numberTextField.text!, base: curBase)
+    }
     
     @IBAction func sum(_ sender: UIButton) {
-        storeNumber()
+        if prevNum == nil {
+            storeNumber()
+        } else {
+            performOperations()
+        }
+        prevOperation = "+"
+        highlightButton(sender)
     }
     
     @IBAction func subtract(_ sender: UIButton) {
-        storeNumber()
+        if prevNum == nil {
+            storeNumber()
+        } else {
+            performOperations()
+        }
+        prevOperation = "-"
+        highlightButton(sender)
     }
     
     @IBAction func baseComplement(_ sender: UIButton) {
-        storeNumber()
+        if prevNum == nil {
+            storeNumber()
+        } else {
+            performOperations()
+        }
     }
     
     @IBAction func convertBase(_ sender: UIButton) {
-        // storeNumber()
         showPickerView(sender)
+    }
+
+    @IBAction func equalsAction(_ sender: UIButton) {
+        performOperations()
+        prevOperation = "="
+        prevNum = nil
+    }
+
+
+    func performOperations() {
+        switch prevOperation {
+        case "+":
+            prevNum += curNumber()
+            updateTextField()
+            break
+        default:
+            break
+        }
+    }
+
+    func updateTextField() {
+        numberTextField.text = prevNum.toString()
     }
     
     func storeNumber(){
-        prevNum = Number(number: numberTextField.text!, base: curBase)
-        print(prevNum.whole)
+        prevNum = curNumber()
     }
 }
 

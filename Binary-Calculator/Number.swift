@@ -44,6 +44,29 @@ class Number: NSObject {
     }
 
     func toString() -> String {
-        String(whole, radix: base.rawValue, uppercase: true)
+        let wholeStr = String(whole, radix: base.rawValue, uppercase: true)
+        return isNegative ? "-" + wholeStr : wholeStr
+    }
+
+    private func addWhole(_ a: Int, isNegative: Bool) {
+        if self.isNegative == isNegative {
+            self.whole += a
+        } else {
+            self.whole -= a
+        }
+        if self.whole < 0 {
+            self.whole *= -1
+            self.isNegative = !self.isNegative
+        }
+    }
+
+    private func addFract(_ s: String) {
+        // Do some stuff
+    }
+
+    static func +=(a: Number, b: Number) -> Number {
+        a.addWhole(b.whole, isNegative: b.isNegative)
+        // a.addFract(b.fract)
+        return a
     }
 }

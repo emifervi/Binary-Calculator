@@ -25,13 +25,13 @@ class Number: NSObject {
     init(number: String, base: Base) {
         self.base = base
         let digits = Array(number);
-        
+
         isNegative = digits[0] == "-"
-        
+
         if let dotPos = digits.lastIndex(of: ".") {
             let wholeStr = String(digits[0..<dotPos])
             whole = Int(wholeStr, radix: base.rawValue)!
-            
+
             // let fractStr = String(digits[(dotPos + 1)...])
             fract = ""
         } else {
@@ -60,13 +60,26 @@ class Number: NSObject {
         }
     }
 
+    private func substractWhole(_ a: Int, isNegative: Bool) {
+        self.isNegative == isNegative ? addWhole(a, isNegative: true) :
+            addWhole(a, isNegative: false)
+    }
+
     private func addFract(_ s: String) {
         // Do some stuff
     }
 
-    static func +=(a: Number, b: Number) -> Number {
+    private func substractFract(_ s: String) {
+        // Do some stuff
+    }
+
+    static func +=(a: Number, b: Number) {
         a.addWhole(b.whole, isNegative: b.isNegative)
         // a.addFract(b.fract)
-        return a
+    }
+
+    static func -=(a: Number, b: Number) {
+        a.substractWhole(b.whole, isNegative: b.isNegative)
+        // a.substractFract(b.fract)
     }
 }

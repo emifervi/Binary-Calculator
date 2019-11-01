@@ -13,14 +13,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var digitsStackView: UIStackView!
     @IBOutlet weak var curBaseBtn: UIButton!
-    
+
     var digitButtons: [UIButton] = [UIButton]()
     var hasDecimalDot = false
-    
+
     var prevNum: Number!
     var prevOperation = ""
     var highlightedButton : UIButton!
-    
+
     var curBase = Base.Base10
 
     override func viewDidLoad() {
@@ -72,10 +72,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.view.addSubview(toolBar)
     }
 
-    @objc func doneClick() {        
+    @objc func doneClick() {
         let selectedBase = Base(rawValue: picker.selectedRow(inComponent: 0) + 2)!
         changeCurBase(base: selectedBase)
-                
+
         toolBar.removeFromSuperview()
         picker.removeFromSuperview()
     }
@@ -136,21 +136,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             numberTextField.text = number
         }
     }
-    
+
     func changeCurBase(base: Base) -> Void {
         let temp = Number(number: numberTextField.text!, base: curBase)
         temp.updateBase(base)
         numberTextField.text = temp.toString()
-        
+
         curBase = base
         curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
-        
+
         for index in 2..<base.rawValue {
             digitButtons[index].isEnabled = true
             digitButtons[index].backgroundColor = UIColor.lightGray
             digitButtons[index].setTitleColor(UIColor.white, for: .normal)
         }
-        
+
         for index in base.rawValue..<16 {
             digitButtons[index].isEnabled = false
             digitButtons[index].backgroundColor = UIColor.darkGray
@@ -169,13 +169,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         button.setTitleColor(.systemOrange, for: .normal)
         highlightedButton = button
     }
-    
+
     // MARK:- Operations
 
     func curNumber() -> Number {
         Number(number: numberTextField.text!, base: curBase)
     }
-    
+
     @IBAction func sum(_ sender: UIButton) {
         if prevNum == nil {
             storeNumber()
@@ -185,7 +185,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         prevOperation = "+"
         highlightButton(sender)
     }
-    
+
     @IBAction func subtract(_ sender: UIButton) {
         if prevNum == nil {
             storeNumber()
@@ -195,7 +195,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         prevOperation = "-"
         highlightButton(sender)
     }
-    
+
     @IBAction func baseComplement(_ sender: UIButton) {
         if prevNum == nil {
             storeNumber()
@@ -203,7 +203,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             performOperations()
         }
     }
-    
+
     @IBAction func convertBase(_ sender: UIButton) {
         showPickerView(sender)
     }
@@ -214,11 +214,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         prevNum = nil
     }
 
-
     func performOperations() {
         switch prevOperation {
         case "+":
             prevNum += curNumber()
+            updateTextField()
+            break
+        case "-":
+            prevNum -= curNumber()
             updateTextField()
             break
         default:
@@ -229,7 +232,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func updateTextField() {
         numberTextField.text = prevNum.toString()
     }
-    
+
     func storeNumber(){
         prevNum = curNumber()
     }

@@ -138,7 +138,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func changeCurBase(base: Base) -> Void {
-        let temp = Number(number: numberTextField.text!, base: curBase)
+        let temp = curNumber()
         temp.updateBase(base)
         numberTextField.text = temp.toString()
 
@@ -170,6 +170,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         highlightedButton = button
     }
 
+    func showBaseComplementAlert() {
+        let alert = UIAlertController(title: "¿Cuál acción quieres hacer?", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Complemento a la base", style: .default, handler: { (_) in
+            self.prevNum = Operations.radixComplement(self.curNumber())
+            self.updateTextField()
+        }))
+        alert.addAction(UIAlertAction(title: "Complemento a la base disminuida", style: .default, handler: { (_) in
+            self.prevNum = Operations.radixComplementMinus1(self.curNumber())
+            self.updateTextField()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+
     // MARK:- Operations
 
     func curNumber() -> Number {
@@ -197,8 +211,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func baseComplement(_ sender: UIButton) {
-        prevNum = Operations.radixComplement(curNumber())
-        updateTextField()
+        showBaseComplementAlert()
     }
 
     @IBAction func convertBase(_ sender: UIButton) {
@@ -234,4 +247,3 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         prevNum = curNumber()
     }
 }
-

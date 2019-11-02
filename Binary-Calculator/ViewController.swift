@@ -197,11 +197,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func baseComplement(_ sender: UIButton) {
-        if prevNum == nil {
-            storeNumber()
-        } else {
-            performOperations()
-        }
+        prevNum = Operations.radixComplement(curNumber())
+        updateTextField()
     }
 
     @IBAction func convertBase(_ sender: UIButton) {

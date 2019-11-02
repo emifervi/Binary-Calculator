@@ -73,6 +73,18 @@ class Number: NSObject {
         // Do some stuff
     }
 
+    static func +(a: Number, b: Number) -> Number {
+        a.addWhole(b.whole, isNegative: b.isNegative)
+        // a.addFract(b.fract)
+        return a
+    }
+
+    static func -(a: Number, b: Number) -> Number  {
+        a.substractWhole(b.whole, isNegative: b.isNegative)
+        // a.substractFract(b.fract)
+        return a
+    }
+
     static func +=(a: Number, b: Number) {
         a.addWhole(b.whole, isNegative: b.isNegative)
         // a.addFract(b.fract)

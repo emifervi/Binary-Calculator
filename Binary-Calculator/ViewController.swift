@@ -51,24 +51,31 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return pickerData[row]
     }
 
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        // Select data
-    }
-
-    func showPickerView(_ button: UIButton) {
+    func initializePickerView() {
         picker = UIPickerView.init()
         picker.delegate = self
-        picker.backgroundColor = UIColor.white
-        picker.setValue(UIColor.black, forKey: "textColor")
+        picker.backgroundColor = .black
         picker.autoresizingMask = .flexibleWidth
         picker.contentMode = .center
         picker.frame = CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
         picker.selectRow(curBase.rawValue - 2, inComponent: 0, animated: false)
-        self.view.addSubview(picker)
+    }
 
+    func initializeToolbar() {
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .default
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(doneClick))]
+    }
+
+    func showPickerView(_ button: UIButton) {
+        if picker == nil {
+            initializePickerView()
+        }
+        self.view.addSubview(picker)
+
+        if toolBar == nil {
+            initializeToolbar()
+        }
         self.view.addSubview(toolBar)
     }
 

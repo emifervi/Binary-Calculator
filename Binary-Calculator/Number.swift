@@ -46,10 +46,34 @@ class Number: NSObject {
     }
 
     func toString() -> String {
-        let wholeStr = String(whole, radix: base.rawValue, uppercase: true)
-        // let fractStr
+        let wholeStr = numberToString(whole)
+        let fractStr = (fract == 0.0) ? "" : "." + fractToString()
         
-        return isNegative ? "-" + wholeStr : wholeStr
+        return isNegative ? "-" + wholeStr : wholeStr + fractStr
+    }
+    
+    private func numberToString(_ number: Int) -> String{
+        String(number, radix: base.rawValue, uppercase: true)
+    }
+    
+    private func fractToString() -> String{
+        var fractNum = self.fract
+        let error = (Decimal(pow(10, -10)) as NSDecimalNumber).doubleValue
+        var n = 1
+        
+        var result = ""
+        
+        while (fractNum > error && result.count < 15){
+            fractNum *= Double(base.rawValue)
+            let wholeFractNum = Int(fractNum)
+            
+            result += numberToString(wholeFractNum)
+            
+            fractNum -= Double(wholeFractNum)
+            n += 1;
+        }
+        
+        return result
     }
 
     private func addWhole(_ a: Int, isNegative: Bool) {

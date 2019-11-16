@@ -31,10 +31,9 @@ class Number: NSObject {
         if let dotPos = digits.lastIndex(of: ".") {
             let wholeStr = String(digits[0..<dotPos])
             whole = Int(wholeStr, radix: base.rawValue)!
-
-            let fractStr = String(digits[(dotPos + 1)...])
+            let fractStr = digits.count == dotPos + 1 ? "0" :
+                           String(digits[(dotPos + 1)...])
             fract = Operations.storeAsDecimal(fractStr, base)
-            
         } else {
             whole = Int(number, radix: base.rawValue)!
             fract = 0.0

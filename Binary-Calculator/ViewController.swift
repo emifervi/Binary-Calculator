@@ -13,6 +13,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var digitsStackView: UIStackView!
     @IBOutlet weak var curBaseBtn: UIButton!
+    @IBOutlet weak var acBtn: UIButton!
+    @IBOutlet weak var baseComplementBtn: UIButton!
 
     var digitButtons: [UIButton] = [UIButton]()
     var hasDecimalDot = false
@@ -95,7 +97,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let lastIndex = innerStackViews.count - 1
         for index in 0..<lastIndex {
             let innerDigits = innerStackViews[index].subviews as! [UIButton]
-            digitButtons += innerDigits[0...2].reversed()
+            digitButtons += innerDigits.reversed()
         }
         digitButtons.append(
             innerStackViews[lastIndex].subviews[1] as! UIButton
@@ -116,20 +118,36 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             number = ""
         }
         if digitToAdd != "." {
-            numberTextField.text = number + digitToAdd
+            updateTextField(number, digitToAdd)
         } else if !hasDecimalDot {
-            numberTextField.text = number + digitToAdd
+            if number == "" {
+                number = "0"
+            }
+            let btnColor = UIColor(red: 167.0 / 255, green: 98.0 / 255, blue: 1.0 / 255, alpha: 1.0)
+            disableButton(baseComplementBtn, color: btnColor)
+            updateTextField(number, digitToAdd)
             hasDecimalDot = true
         }
+    }
+
+    func updateTextField(_ number: String, _ digitToAdd: String) {
+        numberTextField.text = number + digitToAdd
+        acBtn.setTitle("C", for: .normal)
     }
 
     @IBAction func eraseNumber(_ sender: UIButton) {
         if numberTextField.text == "0" {
             prevOperation = ""
             prevNum = nil
+            if highlightedButton != nil {
+                unHighlightButton()
+            }
         }
         numberTextField.text = "0"
         hasDecimalDot = false
+        acBtn.setTitle("AC", for: .normal)
+        let btnColor: UIColor = .systemOrange
+        enableButton(baseComplementBtn, color: btnColor)
     }
 
     @IBAction func changeSign(_ sender: UIButton) {
@@ -154,16 +172,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
 
         for index in 2..<base.rawValue {
-            digitButtons[index].isEnabled = true
-            digitButtons[index].backgroundColor = UIColor.lightGray
-            digitButtons[index].setTitleColor(UIColor.white, for: .normal)
+            enableButton(digitButtons[index])
         }
 
         for index in base.rawValue..<16 {
-            digitButtons[index].isEnabled = false
-            digitButtons[index].backgroundColor = UIColor.darkGray
-            digitButtons[index].setTitleColor(UIColor.lightGray, for: .normal)
+            disableButton(digitButtons[index])
         }
+    }
+
+    func enableButton(_ button: UIButton, color: UIColor = .lightGray) {
+        button.isEnabled = true
+        button.backgroundColor = color
+        button.setTitleColor(UIColor.white, for: .normal)
+    }
+
+    func disableButton(_ button: UIButton, color: UIColor = .darkGray) {
+        button.isEnabled = false
+        button.backgroundColor = color
+        button.setTitleColor(UIColor.lightGray, for: .normal)
     }
 
     func unHighlightButton() {
@@ -236,15 +262,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         switch prevOperation {
         case "+":
             prevNum += curNumber()
-            updateTextField()
             break
         case "-":
             prevNum -= curNumber()
-            updateTextField()
             break
         default:
             break
         }
+        updateTextField()
     }
 
     func updateTextField() {

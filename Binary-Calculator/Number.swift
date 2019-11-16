@@ -18,7 +18,7 @@ enum Base: Int{
 class Number: NSObject {
 
     var whole: Int
-    var fract: String!
+    var fract: Double
     var base: Base
     var isNegative: Bool
 
@@ -32,10 +32,12 @@ class Number: NSObject {
             let wholeStr = String(digits[0..<dotPos])
             whole = Int(wholeStr, radix: base.rawValue)!
 
-            // let fractStr = String(digits[(dotPos + 1)...])
-            fract = ""
+            let fractStr = String(digits[(dotPos + 1)...])
+            fract = Operations.storeAsDecimal(fractStr, base)
+            
         } else {
             whole = Int(number, radix: base.rawValue)!
+            fract = 0.0
         }
     }
 
@@ -45,6 +47,8 @@ class Number: NSObject {
 
     func toString() -> String {
         let wholeStr = String(whole, radix: base.rawValue, uppercase: true)
+        // let fractStr
+        
         return isNegative ? "-" + wholeStr : wholeStr
     }
 

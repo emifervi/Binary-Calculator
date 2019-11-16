@@ -45,4 +45,16 @@ class Operations: NSObject {
         let complementNumber = baseComplementMinus1(number.toString(), base)
         return complementNumber - number
     }
+    
+    static func storeAsDecimal(_ fract: String, _ base: Base) -> Double {
+        var basePow = 1.0
+        var result = 0.0
+        
+        for char in fract {
+            basePow /= Double(base.rawValue)
+            result += basePow * Double(Int(String(char), radix: base.rawValue)!)
+        }
+        
+        return result
+    }
 }

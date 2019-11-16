@@ -123,8 +123,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if number == "" {
                 number = "0"
             }
-            let btnColor = UIColor(red: 167.0 / 255, green: 98.0 / 255, blue: 1.0 / 255, alpha: 1.0)
-            disableButton(baseComplementBtn, color: btnColor)
+            disableBaseComplementBtn()
             updateTextField(number, digitToAdd)
             hasDecimalDot = true
         }
@@ -146,8 +145,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         numberTextField.text = "0"
         hasDecimalDot = false
         acBtn.setTitle("AC", for: .normal)
-        let btnColor: UIColor = .systemOrange
-        enableButton(baseComplementBtn, color: btnColor)
+        enableBaseComplementBtn()
     }
 
     @IBAction func changeSign(_ sender: UIButton) {
@@ -156,11 +154,23 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let isNegative = number.prefix(1) == "-"
             if isNegative {
                 number = String(number.suffix(number.count - 1))
+                enableBaseComplementBtn()
             } else {
                 number = "-" + number
+                disableBaseComplementBtn()
             }
             numberTextField.text = number
         }
+    }
+
+    func enableBaseComplementBtn() {
+        let btnColor: UIColor = .systemOrange
+        enableButton(baseComplementBtn, color: btnColor)
+    }
+
+    func disableBaseComplementBtn() {
+        let btnColor = UIColor(red: 167.0 / 255, green: 98.0 / 255, blue: 1.0 / 255, alpha: 1.0)
+        disableButton(baseComplementBtn, color: btnColor)
     }
 
     func changeCurBase(base: Base) -> Void {

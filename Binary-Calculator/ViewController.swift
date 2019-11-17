@@ -253,5 +253,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     func storeNumber(){
         prevNum = curNumber()
+        hasDecimalDot = false
     }
 }

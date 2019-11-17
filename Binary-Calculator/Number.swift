@@ -25,7 +25,7 @@ class Number: NSObject {
     init(number: String, base: Base) {
         self.base = base
         let digits = Array(number);
-
+        
         isNegative = digits[0] == "-"
 
         if let dotPos = digits.lastIndex(of: ".") {
@@ -49,7 +49,7 @@ class Number: NSObject {
         let wholeStr = numberToString(whole)
         let fractStr = (fract == 0.0) ? "" : "." + fractToString()
         
-        return isNegative ? "-" + wholeStr : wholeStr + fractStr
+        return wholeStr + fractStr
     }
     
     private func numberToString(_ number: Int) -> String{
@@ -70,56 +70,56 @@ class Number: NSObject {
             result += numberToString(wholeFractNum)
             
             fractNum -= Double(wholeFractNum)
+            fractNum = charminTruncate(fractNum)
             n += 1;
         }
         
         return result
     }
-
-    private func addWhole(_ a: Int, isNegative: Bool) {
-        if self.isNegative == isNegative {
-            self.whole += a
-        } else {
-            self.whole -= a
+    
+    private func charminTruncate(_ number : Double, _ precision: Int = 10) -> Double {
+        let fractPart = number.truncatingRemainder(dividingBy: 1)
+        let numDecimals = (pow(10, precision) as NSDecimalNumber).doubleValue
+        return Double(round(numDecimals * fractPart)/numDecimals)
+    }
+    
+    private func buildDouble(_ whole: Int, _ fract: Double, _ isNeg: Bool) -> Double {
+        var num = Double(abs(whole)) + fract
+        if isNeg {
+            num *= -1.0
         }
-        if self.whole < 0 {
-            self.whole *= -1
-            self.isNegative = !self.isNegative
-        }
+        return num
     }
 
-    private func substractWhole(_ a: Int, isNegative: Bool) {
-        self.isNegative == isNegative ? addWhole(a, isNegative: true) :
-            addWhole(a, isNegative: false)
+    private func add(_ otherWhole: Int, _ otherFract: Double, _ otherIsNeg: Bool) {
+        let numA = buildDouble(self.whole, self.fract, self.isNegative)
+        let numB = buildDouble(otherWhole, otherFract, otherIsNeg)
+        
+        let res = numA + numB
+        
+        self.whole = Int(res)
+        self.fract = abs(charminTruncate(res - Double(self.whole)))
     }
 
-    private func addFract(_ s: String) {
-        // Do some stuff
-    }
-
-    private func substractFract(_ s: String) {
-        // Do some stuff
+    private func substract(_ otherWhole: Int, _ otherFract: Double, _ otherIsNeg: Bool) {
+        add(otherWhole, otherFract, !otherIsNeg)
     }
 
     static func +(a: Number, b: Number) -> Number {
-        a.addWhole(b.whole, isNegative: b.isNegative)
-        // a.addFract(b.fract)
+        a.add(b.whole, b.fract, b.isNegative)
         return a
     }
 
     static func -(a: Number, b: Number) -> Number  {
-        a.substractWhole(b.whole, isNegative: b.isNegative)
-        // a.substractFract(b.fract)
+        a.substract(b.whole, b.fract, b.isNegative)
         return a
     }
 
     static func +=(a: Number, b: Number) {
-        a.addWhole(b.whole, isNegative: b.isNegative)
-        // a.addFract(b.fract)
+        a.add(b.whole, b.fract, b.isNegative)
     }
 
     static func -=(a: Number, b: Number) {
-        a.substractWhole(b.whole, isNegative: b.isNegative)
-        // a.substractFract(b.fract)
+        a.substract(b.whole, b.fract, b.isNegative)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -24,6 +25,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var highlightedButton : UIButton!
 
     var curBase = Base.Base10
+    
+    let systemSoundID: SystemSoundID = 1104
+    let generator = UIImpactFeedbackGenerator(style: .light)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +110,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func addDigit(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
+        
         var number = numberTextField.text ?? ""
         let digitToAdd = sender.titleLabel!.text!
 
@@ -135,6 +142,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func eraseNumber(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
+        
         if numberTextField.text == "0" {
             prevOperation = ""
             prevNum = nil
@@ -235,6 +245,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func sum(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
+                
         if prevNum == nil {
             storeNumber()
         } else {
@@ -245,6 +258,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func subtract(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
+        
         if prevNum == nil {
             storeNumber()
         } else {
@@ -255,17 +271,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func baseComplement(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
         showBaseComplementAlert()
     }
 
     @IBAction func convertBase(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
         showPickerView(sender)
     }
 
     @IBAction func equalsAction(_ sender: UIButton) {
+        AudioServicesPlaySystemSound(systemSoundID)
+        generator.impactOccurred()
+
         if prevNum != nil {
             performOperations()
         }
+
         prevOperation = "="
         prevNum = nil
     }

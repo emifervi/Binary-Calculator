@@ -285,7 +285,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func equalsAction(_ sender: UIButton) {
         AudioServicesPlaySystemSound(systemSoundID)
         generator.impactOccurred()
-        performOperations()
+
+        if prevNum != nil {
+            performOperations()
+        }
+
         prevOperation = "="
         prevNum = nil
     }
@@ -302,6 +306,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             break
         }
         updateTextField()
+        if highlightedButton != nil {
+            unHighlightButton()
+        }
     }
 
     func updateTextField() {

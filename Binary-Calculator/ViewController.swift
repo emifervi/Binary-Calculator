@@ -97,7 +97,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let lastIndex = innerStackViews.count - 1
         for index in 0..<lastIndex {
             let innerDigits = innerStackViews[index].subviews as! [UIButton]
-            digitButtons += innerDigits.reversed()
+            digitButtons += innerDigits[0...2].reversed()
         }
         digitButtons.append(
             innerStackViews[lastIndex].subviews[1] as! UIButton
@@ -174,9 +174,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func changeCurBase(base: Base) -> Void {
-        let temp = curNumber()
-        temp.updateBase(base)
-        numberTextField.text = temp.toString()
+        storeNumber()
+        prevNum.updateBase(base)
+        numberTextField.text = prevNum.toString()
 
         curBase = base
         curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
@@ -289,5 +289,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func storeNumber(){
         prevNum = curNumber()
         hasDecimalDot = false
+        
+        if prevNum.fract == 0 {
+            enableBaseComplementBtn()
+        }
     }
 }

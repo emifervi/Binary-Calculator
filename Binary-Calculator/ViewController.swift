@@ -263,7 +263,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     @IBAction func equalsAction(_ sender: UIButton) {
-        performOperations()
+        if prevNum != nil {
+            performOperations()
+        }
         prevOperation = "="
         prevNum = nil
     }

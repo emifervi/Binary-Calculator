@@ -8,22 +8,7 @@
 
 import UIKit
 
-class Operations: NSObject {
-    
-    /*
-    static func convert(number: Number, bActual: Base, bDest: Base) -> Number {
-        var ans = ""
-        
-        // Whole
-        let wholeDec = Int(number.whole, radix: bActual.rawValue)!
-        ans += String(wholeDec, radix: bDest.rawValue)
-        
-        // Fract
-        // TBD
-        
-        return Number(number: ans, base: bDest);
-    }
-     */
+class Operations {
 
     static func baseComplementMinus1(_ number: String, _ base: Base) -> Number {
         var ans = String(base.rawValue - 1, radix: base.rawValue, uppercase: true)
@@ -35,9 +20,7 @@ class Operations: NSObject {
     }
 
     static func radixComplement(_ number: Number) -> Number {
-        let base = number.base
-        let complementNumber = baseComplementMinus1(number.toString(), base)
-        return complementNumber + Number(number: "1", base: base) - number
+        radixComplementMinus1(number) + Number(number: "1", base: number.base)
     }
 
     static func radixComplementMinus1(_ number: Number) -> Number {
@@ -45,16 +28,15 @@ class Operations: NSObject {
         let complementNumber = baseComplementMinus1(number.toString(), base)
         return complementNumber - number
     }
-    
+
     static func storeAsDecimal(_ fract: String, _ base: Base) -> Double {
         var basePow = 1.0
         var result = 0.0
-        
+        let baseValue = Double(base.rawValue)
         for char in fract {
-            basePow /= Double(base.rawValue)
+            basePow /= baseValue
             result += basePow * Double(Int(String(char), radix: base.rawValue)!)
         }
-        
         return result
     }
 }

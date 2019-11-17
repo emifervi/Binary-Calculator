@@ -22,10 +22,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     var prevNum: Number!
     var prevOperation = ""
-    var highlightedButton : UIButton!
+    var highlightedButton: UIButton!
 
     var curBase = Base.Base10
-    
+
     let systemSoundID: SystemSoundID = 1104
     let generator = UIImpactFeedbackGenerator(style: .light)
 
@@ -34,7 +34,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         loadDigitButtons()
     }
 
-    // MARK:- Pickerview functions
+    // MARK: - Pickerview functions
 
     var picker: UIPickerView!
     var toolBar: UIToolbar!
@@ -53,7 +53,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         pickerData.count
     }
 
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int,
+                    forComponent component: Int) -> NSAttributedString? {
         NSAttributedString(string: pickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
 
@@ -63,12 +64,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         picker.backgroundColor = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1)
         picker.autoresizingMask = .flexibleWidth
         picker.contentMode = .center
-        picker.frame = CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
+        picker.frame = CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300,
+                                   width: UIScreen.main.bounds.size.width, height: 300)
         picker.selectRow(curBase.rawValue - 2, inComponent: 0, animated: false)
     }
 
     func initializeToolbar() {
-        toolBar = UIToolbar.init(frame: CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
+        toolBar = UIToolbar.init(frame: CGRect.init(x: 0, y: UIScreen.main.bounds.size.height - 300,
+                                                    width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .black
         toolBar.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(doneClick))]
@@ -94,7 +97,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         picker.removeFromSuperview()
     }
 
-    // MARK:- UI functions
+    // MARK: - UI functions
 
     func loadDigitButtons() {
         let innerStackViews = digitsStackView.subviews as! [UIStackView]
@@ -112,7 +115,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func addDigit(_ sender: UIButton) {
         AudioServicesPlaySystemSound(systemSoundID)
         generator.impactOccurred()
-        
+
         var number = numberTextField.text ?? ""
         let digitToAdd = sender.titleLabel!.text!
 
@@ -144,7 +147,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func eraseNumber(_ sender: UIButton) {
         AudioServicesPlaySystemSound(systemSoundID)
         generator.impactOccurred()
-        
+
         if numberTextField.text == "0" {
             prevOperation = ""
             prevNum = nil
@@ -183,7 +186,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         disableButton(baseComplementBtn, color: btnColor)
     }
 
-    func changeCurBase(base: Base) -> Void {
+    func changeCurBase(base: Base) {
         storeNumber()
         prevNum.updateBase(base)
         numberTextField.text = prevNum.toString()
@@ -238,7 +241,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.present(alert, animated: true)
     }
 
-    // MARK:- Operations
+    // MARK: - Operations
 
     func curNumber() -> Number {
         Number(number: numberTextField.text!, base: curBase)
@@ -247,7 +250,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func sum(_ sender: UIButton) {
         AudioServicesPlaySystemSound(systemSoundID)
         generator.impactOccurred()
-                
+
         if prevNum == nil {
             storeNumber()
         } else {
@@ -260,7 +263,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func subtract(_ sender: UIButton) {
         AudioServicesPlaySystemSound(systemSoundID)
         generator.impactOccurred()
-        
+
         if prevNum == nil {
             storeNumber()
         } else {
@@ -289,19 +292,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if prevNum != nil {
             performOperations()
         }
-
         prevOperation = "="
-        prevNum = nil
     }
 
     func performOperations() {
         switch prevOperation {
         case "+":
             prevNum += curNumber()
-            break
         case "-":
             prevNum -= curNumber()
-            break
         default:
             break
         }
@@ -315,10 +314,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         numberTextField.text = prevNum.toString()
     }
 
-    func storeNumber(){
+    func storeNumber() {
         prevNum = curNumber()
         hasDecimalDot = false
-        
+
         if prevNum.fract == 0 {
             enableBaseComplementBtn()
         }

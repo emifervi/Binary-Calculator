@@ -282,6 +282,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             break
         }
         updateTextField()
+        if highlightedButton != nil {
+            unHighlightButton()
+        }
     }
 
     func updateTextField() {

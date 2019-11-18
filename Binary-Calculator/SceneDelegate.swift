@@ -3,7 +3,7 @@
 //  Binary-Calculator
 //
 //  Created by Ricardo González Castillo on 10/11/19.
-//  Copyright © 2019 Binary-Boiz. All rights reserved.
+//  Copyright © 2019 Charmin-Bois. All rights reserved.
 //
 
 import UIKit

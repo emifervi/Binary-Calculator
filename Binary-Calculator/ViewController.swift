@@ -16,6 +16,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var curBaseBtn: UIButton!
     @IBOutlet weak var acBtn: UIButton!
     @IBOutlet weak var baseComplementBtn: UIButton!
+    @IBOutlet weak var numberView: UIView!
 
     var digitButtons: [UIButton] = [UIButton]()
     var hasDecimalDot = false
@@ -32,6 +33,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDigitButtons()
+        addTapActionToNumberText()
     }
 
     // MARK: - Pickerview functions
@@ -110,6 +112,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             innerStackViews[lastIndex].subviews[1] as! UIButton
         )
         digitButtons = digitButtons.reversed()
+    }
+
+    func addTapActionToNumberText() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(copyToClipBoard(sender:)))
+        numberView.isUserInteractionEnabled = true
+        numberView.addGestureRecognizer(tap)
+    }
+
+    @objc func copyToClipBoard(sender: UITapGestureRecognizer) {
+        UIPasteboard.general.string = numberTextField.text
+
+        let alert = TimedAlertView(title: "Copied to Clipboard")
+        alert.show(topController: self)
     }
 
     @IBAction func addDigit(_ sender: UIButton) {

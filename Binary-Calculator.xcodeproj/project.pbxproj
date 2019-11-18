@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9919FA7E2383279A003373F1 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919FA7D2383279A003373F1 /* Modal.swift */; };
+		9919FA8223832970003373F1 /* TimedAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919FA8123832970003373F1 /* TimedAlertView.swift */; };
 		996BC5B92351715E00D35DCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996BC5B82351715E00D35DCB /* AppDelegate.swift */; };
 		996BC5BB2351715F00D35DCB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996BC5BA2351715F00D35DCB /* SceneDelegate.swift */; };
 		996BC5BD2351715F00D35DCB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996BC5BC2351715F00D35DCB /* ViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9919FA7D2383279A003373F1 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
+		9919FA8123832970003373F1 /* TimedAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedAlertView.swift; sourceTree = "<group>"; };
 		996BC5B52351715E00D35DCB /* BaseCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		996BC5B82351715E00D35DCB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		996BC5BA2351715F00D35DCB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 				996BC5BA2351715F00D35DCB /* SceneDelegate.swift */,
 				996BC5BC2351715F00D35DCB /* ViewController.swift */,
 				996BC5BE2351715F00D35DCB /* Main.storyboard */,
+				9919FA7D2383279A003373F1 /* Modal.swift */,
+				9919FA8123832970003373F1 /* TimedAlertView.swift */,
 				996BC5C12351716100D35DCB /* Assets.xcassets */,
 				996BC5C32351716100D35DCB /* LaunchScreen.storyboard */,
 				996BC5C62351716100D35DCB /* Info.plist */,
@@ -145,9 +151,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9970687E23523A5400C5FC75 /* Number.swift in Sources */,
+				9919FA7E2383279A003373F1 /* Modal.swift in Sources */,
 				996BC5BD2351715F00D35DCB /* ViewController.swift in Sources */,
 				996BC5B92351715E00D35DCB /* AppDelegate.swift in Sources */,
 				996BC5BB2351715F00D35DCB /* SceneDelegate.swift in Sources */,
+				9919FA8223832970003373F1 /* TimedAlertView.swift in Sources */,
 				DBFD68F523528B3C00C0E1A2 /* Operations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,13 +301,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NY38PR3PNZ;
+				DEVELOPMENT_TEAM = TB2V95P7U7;
 				INFOPLIST_FILE = "Binary-Calculator/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Tec.Binary-Calculator1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tec.Binary-Calculator";
 				PRODUCT_NAME = BaseCalc;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

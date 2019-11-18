@@ -370,6 +370,7 @@
                         <outlet property="curBaseBtn" destination="WBD-AE-BEo" id="y8U-68-Ni6"/>
                         <outlet property="digitsStackView" destination="vSa-w7-54e" id="Pm3-uv-Dqf"/>
                         <outlet property="numberTextField" destination="Brd-HW-Pky" id="osR-SM-Po4"/>
+                        <outlet property="numberView" destination="jOy-HY-HCT" id="erC-IG-vwH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

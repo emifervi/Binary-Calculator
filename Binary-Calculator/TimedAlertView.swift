@@ -35,7 +35,7 @@ class TimedAlertView: UIView, Modal {
     }
 
     func addTitleView(_ title: String, _ dialogViewWidth: CGFloat) -> UILabel {
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: dialogViewWidth, height: 30))
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 4, width: dialogViewWidth, height: 30))
         titleLabel.text = title
         titleLabel.textAlignment = .center
         dialogView.addSubview(titleLabel)

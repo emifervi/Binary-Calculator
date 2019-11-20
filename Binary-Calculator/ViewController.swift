@@ -202,10 +202,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func changeCurBase(base: Base) {
-        storeNumber()
-        prevNum.updateBase(base)
-        numberTextField.text = prevNum.toString()
-
+        if prevOperation != "+" && prevOperation != "-" {
+            storeNumber()
+            if prevNum != nil {
+                prevNum.updateBase(base)
+                numberTextField.text = prevNum.toString()
+            }
+        } else {
+            let temp = curNumber()
+            temp.updateBase(base)
+            numberTextField.text = temp.toString()
+        }
+        
         curBase = base
         curBaseBtn.setTitle(pickerData[base.rawValue - 2].uppercased(), for: .normal)
 
@@ -330,11 +338,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func storeNumber() {
-        prevNum = curNumber()
-        hasDecimalDot = false
+        if (numberTextField.text! != "0"){
+            prevNum = curNumber()
+            
+            hasDecimalDot = false
 
-        if prevNum.fract == 0 {
-            enableBaseComplementBtn()
+            if prevNum.fract == 0 {
+                enableBaseComplementBtn()
+            }
         }
     }
 }

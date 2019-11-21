@@ -321,8 +321,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func performOperations() {
         switch prevOperation {
         case "+":
+            prevNum.updateBase(curBase)
             prevNum += curNumber()
         case "-":
+            prevNum.updateBase(curBase)
             prevNum -= curNumber()
         default:
             break
